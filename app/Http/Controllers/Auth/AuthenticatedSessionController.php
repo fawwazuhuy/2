@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -22,7 +23,10 @@ class AuthenticatedSessionController extends Controller
 
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
-                'message' => 'Unauthorized'
+                'message' => 'Login gagal: email atau password salah.',
+                'errors' => [
+                    'email' => ['Email atau password tidak cocok dengan catatan kami.']
+                ]
             ], 401);
         }
 
@@ -38,23 +42,27 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request)
+    
+public function destroy(Request $request)
 {
     $sessionInvalidated = false;
     $tokensDeleted = false;
 
-    try {
-        $request->session()->invalidate();
-        $sessionInvalidated = true;
-    } catch (\Exception $e) {
-        $sessionInvalidated = false;
+    $user = Auth::user(); // Bisa juga pakai $request->user()
+
+    if (!$user) {
+        Log::warning('Logout gagal: user tidak ditemukan.');
+        return response()->json([
+            'message' => 'Unauthorized',
+        ], 401);
     }
 
+    // Hapus token
     try {
-        $request->user()->currentAccessToken()->delete();
+        $user->currentAccessToken()->delete();
         $tokensDeleted = true;
     } catch (\Exception $e) {
-        $tokensDeleted = false;
+        Log::error('Gagal menghapus token: ' . $e->getMessage());
     }
 
     return response()->json([

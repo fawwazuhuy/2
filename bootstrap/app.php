@@ -19,7 +19,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->api(prepend: [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            'auth:sanctum', // Tambahkan ini agar token dikenali
+            // 'auth:sanctum', // Tambahkan ini agar token dikenali
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
