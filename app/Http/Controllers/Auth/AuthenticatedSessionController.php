@@ -42,33 +42,35 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    
-public function destroy(Request $request)
-{
-    $sessionInvalidated = false;
-    $tokensDeleted = false;
+    public function destroy(Request $request)
+    {
+        $sessionInvalidated = false;
+        $tokensDeleted = false;
 
-    $user = Auth::user(); // Bisa juga pakai $request->user()
+        // // Hapus session jika tersedia
+        // if ($request->hasSession()) {
+        //     try {
+        //         $request->session()->invalidate();
+        //         $sessionInvalidated = true;
+        //     } catch (\Exception $e) {
+        //         Log::error('Gagal menghapus session: ' . $e->getMessage());
+        //     }
+        // }
 
-    if (!$user) {
-        Log::warning('Logout gagal: user tidak ditemukan.');
+        // Hapus token jika login via Sanctum
+        if ($request->user() && $request->user()->currentAccessToken()) {
+            try {
+                $request->user()->currentAccessToken()->delete();
+                $tokensDeleted = true;
+            } catch (\Exception $e) {
+                Log::error('Gagal menghapus token: ' . $e->getMessage());
+            }
+        }
+
         return response()->json([
-            'message' => 'Unauthorized',
-        ], 401);
+            'message' => 'User logged out successfully',
+            'session_invalidated' => $sessionInvalidated,
+            'tokens_deleted' => $tokensDeleted,
+        ]);
     }
-
-    // Hapus token
-    try {
-        $user->currentAccessToken()->delete();
-        $tokensDeleted = true;
-    } catch (\Exception $e) {
-        Log::error('Gagal menghapus token: ' . $e->getMessage());
-    }
-
-    return response()->json([
-        'message' => 'User logged out successfully',
-        'session_invalidated' => $sessionInvalidated,
-        'tokens_deleted' => $tokensDeleted,
-    ]);
-}
 }

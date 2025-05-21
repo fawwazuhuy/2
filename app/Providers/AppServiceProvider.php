@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
 
         app(VerifyCsrfToken::class)->except([
             'api/*',  // Disable CSRF for this route
-            '/*', // Disable CSRF for all route (delete this if not used or for production)
+            // '/*', // Disable CSRF for all route (delete this if not used or for production)
         ]);
     }
 }
