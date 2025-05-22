@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
             return response()->json([
                 'message' => 'Login gagal: email atau password salah.',
                 'errors' => [
-                    'email' => ['Email atau password tidak cocok dengan catatan kami.']
+                    'email' => ['email or password doesnt match with our record.']
                 ]
             ], 401);
         }
@@ -74,3 +74,4 @@ class AuthenticatedSessionController extends Controller
         ]);
     }
 }
+ 
