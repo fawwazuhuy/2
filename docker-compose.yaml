@@ -5,8 +5,10 @@ services:
     build:
       context: .        # Konteks build adalah root proyek Docker Anda
       dockerfile: Dockerfile # Gunakan Dockerfile di root proyek Anda
-    container_name: laravel_app
+    container_name: laravel_apps
     working_dir: /var/www/html
+    ports:
+      - 9000:9000
     volumes:
       - ./src:/var/www/html
     networks:
@@ -17,7 +19,7 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: laravel_nginx
+    container_name: laravel_nginxs
     ports:
       - "8080:80"
     volumes:
@@ -31,7 +33,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: laravel_db
+    container_name: laravel_dbs
     restart: unless-stopped
     tty: true
     ports:
@@ -53,42 +55,42 @@ services:
       retries: 10
       start_period: 30s # Beri waktu 30 detik untuk inisialisasi awal
   
-  php:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: php
-    volumes:
-      - ./src:/var/www/html
-    ports:
-      - "9000:9000"
-    networks:
-      - laravel
+  # php:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: php
+  #   volumes:
+  #     - ./src:/var/www/html
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - laravel
 
-  composer:
-    image: composer:2.6.2
-    container_name: composer
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    depends_on:
-      - php  
-    networks:
-      - laravel
+  # composer:
+  #   image: composer:2.6.2
+  #   container_name: composer
+  #   volumes:
+  #     - ./src:/var/www/html
+  #   working_dir: /var/www/html
+  #   depends_on:
+  #     - php  
+  #   networks:
+  #     - laravel
 
-  artisan:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: artisan
-    volumes:
-      - ./src:/var/www/html
-    depends_on:
-      - mysql
-    working_dir: /var/www/html
-    entrypoint: ['php', '/var/www/html/artisan']
-    networks:
-      - laravel
+  # artisan:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: artisan
+  #   volumes:
+  #     - ./src:/var/www/html
+  #   depends_on:
+  #     - mysql
+  #   working_dir: /var/www/html
+  #   entrypoint: ['php', '/var/www/html/artisan']
+  #   networks:
+  #     - laravel
 
 # volumes:
 #   db_data:

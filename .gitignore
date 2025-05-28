@@ -33,6 +33,7 @@ builds/
 /src/bootstrap/cache/*.php
 /src/public/hot
 /src/public/storage 
+/src/vendor
 
 # Assets
 /src/public/hot

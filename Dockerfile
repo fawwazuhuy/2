@@ -18,7 +18,9 @@ RUN rm -rf /var/www/html/public/storage
 
 COPY src/ .
 
-
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader --verbose
+  
 # Buat ulang symlink storage
 RUN php artisan storage:link
 
@@ -26,8 +28,6 @@ RUN php artisan storage:link
 
 COPY . .
 
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader --verbose
 
 # Optional: set permissions
 RUN chown -R www-data:www-data /var/www/html
