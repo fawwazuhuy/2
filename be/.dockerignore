@@ -5,4 +5,4 @@ node_modules
 storage
 # .env
 .DS_Store
-src/public/storage
+public/storage

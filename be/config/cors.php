@@ -22,7 +22,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://192.168.254.212:8082'],
+    'allowed_origins' => ['http://192.168.254.211:8082'],
 
     'allowed_origins_patterns' => [],
 
