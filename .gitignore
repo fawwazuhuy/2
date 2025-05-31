@@ -1,0 +1,53 @@
+# .gitignore di root proyek Anda
+
+# Docker-related
+.dockerignore # Jika ada .dockerignore di root, abaikan dirinya sendiri
+
+# Node modules (jika ada frontend JS)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# PHP/Laravel related
+vendor/
+.env             # Pastikan .env di src/ diabaikan
+.env.example.backup
+.env.prod        # Jika Anda membuat versi production, abaikan juga
+Homestead.json
+Homestead.yaml
+/.vagrant
+.phpunit.result.cache
+builds/
+
+# Laravel storage and cache directories
+/src/.env
+/src/.env.bak
+/src/storage/*.key
+/src/storage/*.log
+/src/storage/*.sqlite
+/src/storage/app/public/
+/src/storage/framework/cache/*
+/src/storage/framework/sessions/*
+/src/storage/framework/testing/*
+/src/storage/framework/views/*
+/src/bootstrap/cache/*.php
+/src/public/hot
+/src/public/storage 
+/src/vendor
+
+# Assets
+/src/public/hot
+/src/public/storage
+/src/public/build
+
+# MacOS Specific
+.DS_Store
+
+# PHPStorm / IDEs
+.idea/
+.vscode/
+.phpstorm.meta.php
+.htaccess
+
+# Composer specific
+composer.phar
