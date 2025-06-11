@@ -24,6 +24,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../routes/AuthContext";
 import logoWida from "../assets/logo-wida.png";
 import { motion, AnimatePresence } from "framer-motion";
+import logoMaintify2 from "../assets/logo_maintify2.svg";
+import logomaintify from "../assets/logo_maintify_title.svg";
 
 interface NavItemProps {
   icon: React.ReactNode;
@@ -43,8 +45,8 @@ const NavItem: React.FC<NavItemProps> = ({ icon, text, to, expanded }) => {
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className={`w-full text-left flex items-center p-2 rounded-lg transition-all duration-200
-        ${active ? "bg-blue-50 text-blue-700 font-semibold" : "hover:bg-blue-50 text-gray-700"}
-      `}
+          ${active ? "bg-blue-50 text-blue-700 font-semibold" : "hover:bg-blue-50 text-gray-700"}
+        `}
     >
       <span className="text-xl">{icon}</span>
       {expanded && (
@@ -89,6 +91,7 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -131,7 +134,7 @@ const Dashboard: React.FC = () => {
       id: 1,
       name: "Budi Santoso",
       role: "Maintenance Technician",
-      avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+      avatar: "https://randomuser.me/api/portraits/men/32.jpg  ",
       comment: "The HVAC system in Building A needs calibration. Temperature fluctuations observed.",
       time: "2 hours ago",
     },
@@ -139,7 +142,7 @@ const Dashboard: React.FC = () => {
       id: 2,
       name: "Ani Wijaya",
       role: "Facility Manager",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+      avatar: "https://randomuser.me/api/portraits/women/44.jpg  ",
       comment: "Completed generator maintenance ahead of schedule. All parameters normal.",
       time: "5 hours ago",
     },
@@ -147,7 +150,7 @@ const Dashboard: React.FC = () => {
       id: 3,
       name: "Rudi Hermawan",
       role: "Operations Supervisor",
-      avatar: "https://randomuser.me/api/portraits/men/67.jpg",
+      avatar: "https://randomuser.me/api/portraits/men/67.jpg  ",
       comment: "Requesting additional spare parts for conveyor system maintenance next week.",
       time: "1 day ago",
     },
@@ -218,13 +221,13 @@ const Dashboard: React.FC = () => {
             <div className="p-4 flex items-center justify-between border-b border-blue-100">
               {sidebarOpen ? (
                 <>
-                  <div className="rounded-lg flex items-center space-x-3">
+                  <div className="rounded-lg flex items-center  space-x-3">
                     <img src={logoWida} alt="Logo Wida" className="h-10 w-auto" />
-                    <h1 className="text-sm font-bold text-blue-800">CMMS</h1>
+                    <p className="text-blue-600 font-bold">CMMS</p>
                   </div>
                 </>
               ) : (
-                <img src={logoWida} alt="Logo Wida" className="h-6 w-auto" />
+                <img src={logomaintify} alt="Logo Wida" className="h-6 w-auto" />
               )}
 
               <button onClick={toggleSidebar} className="p-2 rounded-full text-gray-600 hover:bg-blue-50 transition-colors duration-200" aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}>
@@ -252,6 +255,7 @@ const Dashboard: React.FC = () => {
                   </div>
                 )}
               </div>
+
               {sidebarOpen && (
                 <motion.button
                   whileHover={{ scale: 1.02 }}
@@ -299,7 +303,7 @@ const Dashboard: React.FC = () => {
             </motion.button>
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex items-center space-x-2 cursor-pointer p-2 rounded-lg hover:bg-blue-50 transition-colors duration-200">
-              <img src="https://placehold.co/32x32/0078D7/FFFFFF?text=AD" alt="User Avatar" className="w-8 h-8 rounded-full border border-blue-200" />
+              <img src="https://placehold.co/32x32/0078D7/FFFFFF?text=AD  " alt="User Avatar" className="w-8 h-8 rounded-full border border-blue-200" />
               <span className="font-medium text-gray-900 hidden sm:inline">{user?.name}</span>
               <FiChevronDown className="text-gray-500" />
             </motion.div>
@@ -417,16 +421,33 @@ const Dashboard: React.FC = () => {
                 <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
                 <div className="space-y-3">
                   {[
-                    { text: "Create Work Order", icon: <FiClipboard className="text-blue-600" /> },
-                    { text: "Add New Asset", icon: <FiPackage className="text-blue-600" /> },
-                    { text: "Send Announcement", icon: <FiMessageSquare className="text-blue-600" /> },
-                    { text: "Generate Report", icon: <FiBarChart2 className="text-blue-600" /> },
+                    {
+                      text: "Create Work Order",
+                      icon: <FiClipboard className="text-blue-600" />,
+                      onClick: () => navigate("/workorders"),
+                    },
+                    {
+                      text: "Add New Asset",
+                      icon: <FiPackage className="text-blue-600" />,
+                      onClick: () => navigate("/assets"),
+                    },
+                    {
+                      text: "Send Announcement",
+                      icon: <FiMessageSquare className="text-blue-600" />,
+                      onClick: () => navigate("/dashboard"),
+                    },
+                    {
+                      text: "Generate Report",
+                      icon: <FiBarChart2 className="text-blue-600" />,
+                      onClick: () => navigate("/reports"),
+                    },
                   ].map((action, index) => (
                     <motion.button
                       key={index}
                       whileHover={{ x: 5, backgroundColor: "rgba(239, 246, 255, 1)" }}
                       whileTap={{ scale: 0.98 }}
                       className="w-full flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+                      onClick={action.onClick}
                     >
                       <span className="font-medium">{action.text}</span>
                       {action.icon}
