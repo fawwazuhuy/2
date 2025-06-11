@@ -52,7 +52,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         "Content-Type": "application/json",
         ...options.headers,
       },
-      credentials: "include"
     });
 
     if (response.status === 401) {
@@ -74,7 +73,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password }),
-      credentials: "include"
     });
 
     const contentType = response.headers.get('content-type');
@@ -111,7 +109,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
-        credentials: "include"
       });
 
       if (!response.ok) {
@@ -143,7 +140,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          credentials: "include"
         });
       }
     } catch (error) {

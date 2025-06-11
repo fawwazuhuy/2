@@ -22,7 +22,9 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://192.168.254.211:8082'],
+    // 'allowed_origins' => ['http://192.168.254.211:8082'],
+
+    'allowed_origins' => explode(',', env('FRONTEND_URL', '*')),
 
     'allowed_origins_patterns' => [],
 
@@ -32,6 +34,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];
