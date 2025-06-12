@@ -1300,6 +1300,7 @@ const WorkOrdersDashboard: React.FC = () => {
               <NavItem icon={<FiHome />} text="Dashboard" to="/dashboard" expanded={sidebarOpen} />
               <NavItem icon={<FiPackage />} text="Assets" to="/assets" expanded={sidebarOpen} />
               <NavItem icon={<FiClipboard />} text="Work Orders" to="/workorders" expanded={sidebarOpen} />
+              <NavItem icon={<FiClipboard />} text="Machine History" to="/machinehistory" expanded={sidebarOpen} />
               <NavItem icon={<FiDatabase />} text="Inventory" to="/inventory" expanded={sidebarOpen} />
               <NavItem icon={<FiBarChart2 />} text="Reports" to="/reports" expanded={sidebarOpen} />
               <NavItem icon={<FiUsers />} text="Team" to="/team" expanded={sidebarOpen} />
@@ -1614,7 +1615,7 @@ const WorkOrdersDashboard: React.FC = () => {
 
           {/* Pagination */}
           {filteredWorkOrders.length > workOrdersPerPage && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} exit={{ opacity: 0 }} className="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <div className="text-sm text-gray-600 mb-4 sm:mb-0">
                 Showing <span className="font-semibold">{indexOfFirstWorkOrder + 1}</span> to <span className="font-semibold">{Math.min(indexOfLastWorkOrder, filteredWorkOrders.length)}</span> of{" "}
                 <span className="font-semibold">{filteredWorkOrders.length}</span> results
