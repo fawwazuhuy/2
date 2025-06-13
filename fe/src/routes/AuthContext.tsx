@@ -159,12 +159,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const getMesin = async (name: string = "") => {
+  const getMesin = async (name: string ) => {
     try {
       const url = new URL(`${projectEnvVariables.envVariables.VITE_REACT_API_URL}/mesin`);
 
       if (name) {
-        url.searchParams.append("name", name);
+        url.searchParams.append(name);
       }
 
       const response = await fetch(url.toString(), {
