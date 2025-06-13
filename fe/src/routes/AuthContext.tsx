@@ -195,9 +195,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const getMesin = async (): Promise<string[]> => {
     try {
-      const response = await fetch(`${projectEnvVariables.envVariables.VITE_REACT_API_URL}/mesin`);
+      const response = await fetch(${projectEnvVariables.envVariables.VITE_REACT_API_URL}/mesin);
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(HTTP error! status: ${response.status});
       }
       const data: Mesin[] = await response.json();
       return data.map((item) => item.name);

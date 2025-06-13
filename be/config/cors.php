@@ -24,7 +24,7 @@ return [
 
     // 'allowed_origins' => ['http://192.168.254.202:8082'],
 
-    'allowed_origins' => explode(',', env('FRONTEND_URL', '*')),
+    'allowed_origins' => explode(',', env('FRONTEND_URL')),
 
     'allowed_origins_patterns' => [],
 
